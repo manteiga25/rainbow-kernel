@@ -1509,6 +1509,7 @@ void snd_usb_audioformat_attributes_quirk(struct snd_usb_audio *chip,
 	}
 }
 
+<<<<<<< HEAD
 bool snd_usb_support_autosuspend_quirk(struct usb_device *dev)
 {
 	struct snd_usb_audio *chip = dev_get_drvdata(&dev->dev);
@@ -1522,4 +1523,18 @@ bool snd_usb_support_autosuspend_quirk(struct usb_device *dev)
 		return false;
 	}
 	return true;
+=======
+int snd_usb_registration_quirk(struct snd_usb_audio *chip,
+			       int iface)
+{
+	switch (chip->usb_id) {
+	case USB_ID(0x0951, 0x16d8): /* Kingston HyperX AMP */
+		/* Register only when we reach interface 2 so that streams can
+		 * merge correctly into PCMs from interface 0
+		 */
+		return (iface != 2);
+	}
+	/* Register as normal */
+	return 0;
+>>>>>>> 9407f45d86ba (ALSA: usb-audio: Create a registration quirk for Kingston HyperX Amp (0951:16d8))
 }
