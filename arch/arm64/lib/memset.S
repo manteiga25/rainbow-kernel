@@ -25,8 +25,8 @@
 #define dstend	x4
 #define zva_val	x5
 
-ENTRY(__memset)
-WEAK(memset)
+SYM_FUNC_START_ALIAS(__memset)
+SYM_FUNC_START_WEAK_PI(memset)
 	dup	v0.16B, valw
 	add	dstend, dstin, count
 
@@ -114,5 +114,5 @@ L(no_zva_loop):
 	stp	q0, q0, [dstend, -64]
 	stp	q0, q0, [dstend, -32]
 	ret
-ENDPIPROC(memset)
-ENDPROC(__memset)
+SYM_FUNC_END_PI(memset)
+SYM_FUNC_END_ALIAS(__memset)

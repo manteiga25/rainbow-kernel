@@ -54,7 +54,7 @@
 
 /* Locals and temporaries.  */
 
-WEAK(strchr)
+SYM_FUNC_START_WEAK_PI(strchr)
         /* Magic constant 0xc0300c03 to allow us to identify which lane
 	   matches the requested byte.  Even bits are set if the character
 	   matches, odd bits if either the char is NUL or matches.  */
@@ -124,4 +124,4 @@ L(tail):
 	csel	result, result, xzr, eq
 	ret
 
-ENDPROC(strchr)
+SYM_FUNC_END_PI(strchr)

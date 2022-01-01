@@ -67,7 +67,7 @@
    and ignore any characters before the string.  If it contains a NUL
    character, return the length, if not, continue in the main loop.  */
 
-WEAK(strlen)
+SYM_FUNC_START_WEAK_PI(strlen)
 	and	tmp1, srcin, MIN_PAGE_SIZE - 1
 	cmp	tmp1, MIN_PAGE_SIZE - 32
 	b.hi	L(page_cross)
@@ -190,4 +190,5 @@ L(page_cross):
 	lsr	len, len, 1
 	ret
 
-ENDPIPROC(strlen)
+
+SYM_FUNC_END_PI(strlen)
