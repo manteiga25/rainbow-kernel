@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
-* Copyright (C) 2021 Arm Ltd.
+ * Copyright (C) 2021 Arm Ltd.
  */
 
 #include <linux/linkage.h>
@@ -16,7 +16,7 @@
  * Returns:
  *	x0 - address of first occurrence of 'c' or 0
  */
- 
+
 #define L(label) .L ## label
 
 #define REP8_01 0x0101010101010101
@@ -37,9 +37,9 @@
 #define tmp2		x8
 
 	.p2align 4
-	nop 
+	nop
 WEAK(memchr)
-and	chrin, chrin, #0xff
+	and	chrin, chrin, #0xff
 	lsr	wordcnt, cntin, #3
 	cbz	wordcnt, L(byte_loop)
 	mov	rep01, #REP8_01
@@ -68,7 +68,6 @@ CPU_LE(	rev	tmp, tmp)
 	sub	tmp, tmp, #64
 	add	result, srcin, tmp, asr #3
 	ret
-2:	mov	x0, #0
 L(not_found):
 	mov	result, #0
 	ret

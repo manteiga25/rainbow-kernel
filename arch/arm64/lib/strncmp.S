@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
- * Copyright (c) 2013, Arm Limited.
+ * Copyright (c) 2013-2021, Arm Limited.
  *
  * Adapted from the original at:
  * https://github.com/ARM-software/optimized-routines/blob/master/string/aarch64/strncmp.S
@@ -237,7 +237,7 @@ L(loop_misaligned):
 	subs	limit_wd, limit_wd, #1
 	b.pl	L(loop_misaligned)
 
-	L(done_loop):
+L(done_loop):
 	/* We found a difference or a NULL before the limit was reached.  */
 	and	limit, limit, #7
 	cbz	limit, L(not_limit)

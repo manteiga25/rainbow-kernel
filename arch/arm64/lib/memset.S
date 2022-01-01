@@ -25,9 +25,8 @@
 #define dstend	x4
 #define zva_val	x5
 
-	.weak memset
 ENTRY(__memset)
-ENTRY(memset)
+WEAK(memset)
 	dup	v0.16B, valw
 	add	dstend, dstin, count
 
