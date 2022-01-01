@@ -37,9 +37,15 @@
 #define tmp2		x8
 
 	.p2align 4
+<<<<<<< HEAD
 	nop
 WEAK(memchr)
 	and	chrin, chrin, #0xff
+=======
+	nop 
+SYM_FUNC_START_WEAK_PI(memchr)
+and	chrin, chrin, #0xff
+>>>>>>> b45992c08eaf1e90a427833baf04c72bf6adbd96
 	lsr	wordcnt, cntin, #3
 	cbz	wordcnt, L(byte_loop)
 	mov	rep01, #REP8_01
@@ -71,4 +77,5 @@ CPU_LE(	rev	tmp, tmp)
 L(not_found):
 	mov	result, #0
 	ret
-ENDPIPROC(memchr)
+SYM_FUNC_END_PI(memchr)
+EXPORT_SYMBOL_NOKASAN(memchr)
