@@ -44,7 +44,7 @@
    bits in the syndrome reflect the order in which things occur in the original
    string, counting trailing zeros identifies exactly which byte matched.  */
 
-WEAK(strnlen)
+SYM_FUNC_START_WEAK_PI(strnlen)
 	bic	src, srcin, 15
 	mov	wtmp, 0xf00f
 	cbz	cntin, L(nomatch)
@@ -108,4 +108,4 @@ L(end):
 L(nomatch):
 	mov	result, cntin
 	ret
-ENDPIPROC(strnlen)
+SYM_FUNC_END_PI(strnlen)

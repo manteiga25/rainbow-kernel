@@ -715,7 +715,7 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3_OFAST_SUB_OPTIONS
-KBUILD_CFLAGS   += -O3 -fno-signed-zeros -fassociative-math -fno-trapping-math -freciprocal-math -fno-math-errno $(call cc-disable-warning,maybe-uninitialized,) $(CFLAGS) $(AFLAGS)
+KBUILD_CFLAGS   += -O3 -fno-signed-zeros -fassociative-math -fno-trapping-math -freciprocal-math -fno-math-errno $(call cc-disable-warning,maybe-uninitialized,) $(CFLAGS)
 KBUILD_CPPFLAGS += -O3
 KBUILD_AFLAGS   += -O3 -mcpu=cortex-a53
 LDFLAGS         += -O3
@@ -729,12 +729,9 @@ ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -O3 -mcpu=cortex-a53 \
 -fomit-frame-pointer -pipe \
 -ffunction-sections \
--ffp-model=fast -foptimize-sibling-calls $(CFLAGS) $(AFLAGS)
+-ffp-model=fast -foptimize-sibling-calls $(CFLAGS)
 
 # Enable Clang Polly optimizations
-# KBUILD_CFLAGS	+= -fopenmp
-#polly=LLVMPolly.so
-#CFLAGS		+= -plugin LLVMPolly.so
 KBUILD_CFLAGS	+= -mllvm -polly \
                    -mllvm -polly-use-runtime-alias-checks \
                    -mllvm -polly-detect-track-failures \
@@ -762,19 +759,7 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-opt-simplify-deps=no \
 		   -mllvm -polly-rtc-max-arrays-per-group=40 \
 		   -mllvm -polly-parallel \
-			 -mllvm -polly-ast-detect-parallel $(CFLAGS) $(AFLAGS)
-
-KBUILD_AFLAGS   += -mllvm -polly \
-                   -mllvm -polly-position=early \
-                   -mllvm -polly-position=before-vectorizer \
-                   -mllvm -polly-vectorizer=polly \
-		   -mllvm -polly-run-dce \
-		   -mllvm -polly-run-inliner \
-		   -mllvm -polly-vectorizer=stripmine \
-		   -fomit-frame-pointer \
-# CFLAGS          += -plugin-opt=mcpu=cortex-a53
-#polly		+= --plugin-opt=O3
-#CFLAGS		+= --plugin-opt=O3
+			 -mllvm -polly-ast-detect-parallel $(CFLAGS)
                           #-mllvm -polly-no-early-exit
 endif                          
 
@@ -786,7 +771,7 @@ KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
 KBUILD_CFLAGS	+= -fasynchronous-unwind-tables -fexceptions -fno-semantic-interposition -D_FORTIFY_SOURCE=2 \
 -fno-strict-aliasing \
 -pthread -Wall -Wformat-security -fwrapv --param=ssp-buffer-size=32 \
--D_REENTRANT $(CFLAGS) #$(KBUILD_AFLAGS)
+-D_REENTRANT $(CFLAGS)
 
 #-g
 
