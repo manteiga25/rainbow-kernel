@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: MIT
  *
  * Adapted from the original at:
- * https://github.com/ARM-software/optimized-routines/blob/master/string/aarch64/strnlen.S
+ * https://github.com/ARM-software/optimized-routines/blob/master/string/aarch64/strrchr.S
  * Assumptions:
  *
  * ARMv8-a, AArch64
@@ -57,7 +57,7 @@
    in the original string a count_trailing_zeros() operation will
    identify exactly which byte is causing the termination, and why.  */
 
-WEAK(strrchr)
+SYM_FUNC_START_WEAK_PI(strrchr)
        /* Magic constant 0x40100401 to allow us to identify which lane
 	   matches the requested byte.  Magic constant 0x80200802 used
 	   similarly for NUL termination.  */
@@ -147,4 +147,4 @@ L(tail):
 
 	ret
 
-ENDPIPROC(strrchr)
+SYM_FUNC_END_PI(strrchr)
