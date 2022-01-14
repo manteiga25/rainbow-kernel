@@ -582,11 +582,9 @@ static int xhci_mtk_remove(struct platform_device *dev)
 	pm_runtime_put_noidle(&dev->dev);
 	pm_runtime_disable(&dev->dev);
 
-<<<<<<< HEAD
 	xhci->xhc_state |= XHCI_STATE_REMOVING;
 
-=======
->>>>>>> fdde366619c6 (usb: host: xhci-mtk: avoid runtime suspend when removing hcd)
+
 	usb_remove_hcd(shared_hcd);
 	xhci->shared_hcd = NULL;
 	device_init_wakeup(&dev->dev, false);
