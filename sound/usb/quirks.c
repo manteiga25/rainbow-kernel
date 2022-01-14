@@ -1509,9 +1509,7 @@ void snd_usb_audioformat_attributes_quirk(struct snd_usb_audio *chip,
 	}
 }
 
-<<<<<<< HEAD
 bool snd_usb_support_autosuspend_quirk(struct usb_device *dev)
-=======
 /*
  * registration quirk:
  * the registration is skipped if a device matches with the given ID,
@@ -1537,7 +1535,6 @@ static const struct registration_quirk registration_quirks[] = {
 
 /* return true if skipping registration */
 bool snd_usb_registration_quirk(struct snd_usb_audio *chip, int iface)
->>>>>>> 78598eff769a (ALSA: usb-audio: Add registration quirk for Kingston HyperX Cloud Flight S)
 {
 	struct snd_usb_audio *chip = dev_get_drvdata(&dev->dev);
 
