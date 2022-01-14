@@ -454,7 +454,6 @@ static char __log_buf[__LOG_BUF_LEN] __aligned(LOG_ALIGN);
 static char *log_buf = __log_buf;
 static u32 log_buf_len = __LOG_BUF_LEN;
 
-<<<<<<< HEAD
 #ifdef CONFIG_PRINTK_MTK_UART_CONSOLE
 /*
  * 0: uart printk enable
@@ -545,7 +544,6 @@ int get_logtoomuch_enable(void)
 
 #endif
 
-=======
 /*
  * We cannot access per-CPU data (e.g. per-CPU flush irq_work) before
  * per_cpu_areas are initialised. This variable is set to true when
@@ -557,8 +555,6 @@ bool printk_percpu_data_ready(void)
 {
 	return __printk_percpu_data_ready;
 }
-
->>>>>>> caffd39d4f15 (printk: queue wake_up_klogd irq_work only if per-CPU areas are ready)
 /* Return log buffer address */
 char *log_buf_addr_get(void)
 {

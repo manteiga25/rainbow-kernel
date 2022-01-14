@@ -2251,8 +2251,8 @@ static __init void radix_tree_init_maxnodes(void)
 		for (j = i; j > 0; j--)
 			height_to_maxnodes[i] += height_to_maxindex[j - 1] + 1;
 	}
-}
 
+}
 static int radix_tree_cpu_dead(unsigned int cpu)
 {
 	struct radix_tree_preload *rtp;
