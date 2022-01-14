@@ -46,11 +46,6 @@ void snd_usb_audioformat_attributes_quirk(struct snd_usb_audio *chip,
 					  struct audioformat *fp,
 					  int stream);
 
-<<<<<<< HEAD
 bool snd_usb_support_autosuspend_quirk(struct usb_device *dev);
-=======
-int snd_usb_registration_quirk(struct snd_usb_audio *chip,
-			       int iface);
->>>>>>> 9407f45d86ba (ALSA: usb-audio: Create a registration quirk for Kingston HyperX Amp (0951:16d8))
 
 #endif /* __USBAUDIO_QUIRKS_H */
