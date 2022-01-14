@@ -192,21 +192,12 @@ static u32 cpu_power_to_freq(struct cpufreq_cooling_device *cpufreq_cdev,
 {
 	int i;
 
-<<<<<<< HEAD
 	for (i = cpufreq_cdev->max_level - 1; i >= 0; i--) {
 		if (power > cpufreq_cdev->em->table[i].power)
-=======
-	for (i = 0; i < cpufreq_cdev->max_level; i++)
-		if (power >= freq_table[i].power)
->>>>>>> febe56f21371 (thermal/drivers/cpufreq_cooling: Fix wrong frequency converted from power)
 			break;
 	}
 
-<<<<<<< HEAD
 	return cpufreq_cdev->em->table[i + 1].frequency;
-=======
-	return freq_table[i].frequency;
->>>>>>> febe56f21371 (thermal/drivers/cpufreq_cooling: Fix wrong frequency converted from power)
 }
 
 /**

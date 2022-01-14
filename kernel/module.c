@@ -1467,7 +1467,6 @@ static ssize_t module_sect_show(struct module_attribute *mattr,
 {
 	struct module_sect_attr *sattr =
 		container_of(mattr, struct module_sect_attr, mattr);
-
 	return sprintf(buf, "0x%px\n", kptr_restrict < 2 ?
 		       (void *)sattr->address : NULL);
 }
@@ -4289,7 +4288,7 @@ static int modules_open(struct inode *inode, struct file *file)
 
 	if (!err) {
 		struct seq_file *m = file->private_data;
-		m->private = kallsyms_show_value(current_cred()) ? NULL : (void *)8ul;
+		m->private = kallsyms_show_value() ? NULL : (void *)8ul;
 	}
 
 	return err;
