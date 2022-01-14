@@ -264,7 +264,6 @@ extern char *__underlying_strncpy(char *p, const char *q, __kernel_size_t size) 
 #define __underlying_strlen	__builtin_strlen
 #define __underlying_strncat	__builtin_strncat
 #define __underlying_strncpy	__builtin_strncpy
-#define __underlying_kmpc_global_thread_num	__builtin_kmpc_global_thread_num
 #endif
 
 __FORTIFY_INLINE char *strncpy(char *p, const char *q, __kernel_size_t size)
