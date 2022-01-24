@@ -35,7 +35,7 @@ CFLAGS_kcov.o := $(call cc-option, -fno-conserve-stack -fno-stack-protector)
 
 ifndef CONFIG_CFI_CLANG
 # cond_syscall is currently not gcc LTO compatible
-CFLAGS_sys_ni.o = $(DISABLE_LTO)
+# CFLAGS_sys_ni.o = $(DISABLE_LTO)
 endif
 
 # Don't instrument error handlers
