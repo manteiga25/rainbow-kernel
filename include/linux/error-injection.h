@@ -4,7 +4,7 @@
 
 #ifdef CONFIG_FUNCTION_ERROR_INJECTION
 
-#include <asm/error-injection.h>
+#include "asm/error-injection.h"
 
 extern bool within_error_injection_list(unsigned long addr);
 extern int get_injectable_error_type(unsigned long addr);
