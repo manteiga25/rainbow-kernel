@@ -2,6 +2,7 @@
  * Copyright (C) 2013 ARM Ltd.
  * Copyright (C) 2013 Linaro.
  *
+<<<<<<< HEAD
  * This code is based on glibc cortex strings work originally authored by Linaro
  * and re-licensed under GPLv2 for the Linux kernel. The original code can
  * be found @
@@ -20,6 +21,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+=======
+ * Adapted from the original at:
+ * https://github.com/ARM-software/optimized-routines/blob/e823e3abf5f89ecb/string/aarch64/strncmp.S
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
  */
 
 #include <linux/linkage.h>
@@ -137,8 +142,13 @@ CPU_LE( lsl	mask, mask, limit )
 	/* Big-endian.  Early bytes are at MSB.  */
 CPU_BE( lsl	tmp2, tmp2, tmp3 )	/* Shift (tmp1 & 63).  */
 	/* Little-endian.  Early bytes are at LSB.  */
+<<<<<<< HEAD
 CPU_LE( lsr	tmp2, tmp2, tmp3 )	/* Shift (tmp1 & 63).  */
 
+=======
+	lsr	tmp2, tmp2, tmp3	/* Shift (count & 63).  */
+#endif
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
 	and	tmp3, limit_wd, #7
 	lsr	limit_wd, limit_wd, #3
 	/* Adjust the limit. Only low 3 bits used, so overflow irrelevant.*/
@@ -303,9 +313,75 @@ CPU_BE( orr	syndrome, diff, has_nul )
 	b.eq	.Ltiny8proc
 	sub	result, data1, data2
 	ret
+<<<<<<< HEAD
 
 .Lret0:
 	mov	result, #0
 	ret
+=======
+	/* Align the SRC1 to a dword by doing a bytewise compare and then do
+	   the dword loop.  */
+L(try_misaligned_words):
+	lsr	limit_wd, limit, #3
+	cbz	count, L(do_misaligned)
+
+	neg	count, count
+	and	count, count, #7
+	sub	limit, limit, count
+	lsr	limit_wd, limit, #3
+
+L(page_end_loop):
+	ldrb	data1w, [src1], #1
+	ldrb	data2w, [src2], #1
+	cmp	data1w, #1
+	ccmp	data1w, data2w, #0, cs	/* NZCV = 0b0000.  */
+	b.ne	L(done)
+	subs	count, count, #1
+	b.hi	L(page_end_loop)
+
+L(do_misaligned):
+	/* Prepare ourselves for the next page crossing.  Unlike the aligned
+	   loop, we fetch 1 less dword because we risk crossing bounds on
+	   SRC2.  */
+	mov	count, #8
+	subs	limit_wd, limit_wd, #1
+	b.lo	L(done_loop)
+L(loop_misaligned):
+	and	tmp2, src2, #0xff8
+	eor	tmp2, tmp2, #0xff8
+	cbz	tmp2, L(page_end_loop)
+
+	ldr	data1, [src1], #8
+	ldr	data2, [src2], #8
+	sub	tmp1, data1, zeroones
+	orr	tmp2, data1, #REP8_7f
+	eor	diff, data1, data2	/* Non-zero if differences found.  */
+	bics	has_nul, tmp1, tmp2	/* Non-zero if NUL terminator.  */
+	ccmp	diff, #0, #0, eq
+	b.ne	L(not_limit)
+	subs	limit_wd, limit_wd, #1
+	b.pl	L(loop_misaligned)
+
+L(done_loop):
+	/* We found a difference or a NULL before the limit was reached.  */
+	and	limit, limit, #7
+	cbz	limit, L(not_limit)
+	/* Read the last word.  */
+	sub	src1, src1, 8
+	sub	src2, src2, 8
+	ldr	data1, [src1, limit]
+	ldr	data2, [src2, limit]
+	sub	tmp1, data1, zeroones
+	orr	tmp2, data1, #REP8_7f
+	eor	diff, data1, data2	/* Non-zero if differences found.  */
+	bics	has_nul, tmp1, tmp2	/* Non-zero if NUL terminator.  */
+	ccmp	diff, #0, #0, eq
+	b.ne	L(not_limit)
+
+L(ret0):
+	mov	result, #0
+	ret
+
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
 SYM_FUNC_END_PI(strncmp)
 EXPORT_SYMBOL_NOKASAN(strncmp)

@@ -1,8 +1,10 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Based on arch/arm/lib/strchr.S
  *
  * Copyright (C) 1995-2000 Russell King
  * Copyright (C) 2013 ARM Ltd.
+<<<<<<< HEAD
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -15,6 +17,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+=======
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
  */
 
 #include <linux/linkage.h>
@@ -40,4 +44,7 @@ SYM_FUNC_START_WEAK(strchr)
 	csel	x0, x0, xzr, eq
 	ret
 SYM_FUNC_END(strchr)
+<<<<<<< HEAD
 EXPORT_SYMBOL_NOKASAN(strchr)
+=======
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b

@@ -1,13 +1,18 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Copyright (C) 2013 ARM Ltd.
  * Copyright (C) 2013 Linaro.
  *
  * This code is based on glibc cortex strings work originally authored by Linaro
+<<<<<<< HEAD
  * and re-licensed under GPLv2 for the Linux kernel. The original code can
+=======
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
  * be found @
  *
  * http://bazaar.launchpad.net/~linaro-toolchain-dev/cortex-strings/trunk/
  * files/head:/src/aarch64/
+<<<<<<< HEAD
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -20,6 +25,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+=======
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
  */
 
 #include <linux/linkage.h>
@@ -55,7 +62,11 @@ tmp3w		.req	w9
 tmp3		.req	x9
 
 SYM_FUNC_START_ALIAS(__memset)
+<<<<<<< HEAD
 SYM_FUNC_START_PI(memset)
+=======
+SYM_FUNC_START_WEAK_PI(memset)
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
 	mov	dst, dstin	/* Preserve return value.  */
 	and	A_lw, val, #255
 	orr	A_lw, A_lw, A_lw, lsl #8

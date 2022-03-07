@@ -50,18 +50,27 @@
 	   byte we calculate the length from the 2 8-byte words using
 	   conditional select to reduce branch mispredictions (it is unlikely
 	   strlen will be repeatedly called on strings with the same length).
+<<<<<<< HEAD
 
+=======
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
 	   If the string is longer than 16 bytes, we align src so don't need
 	   further page cross checks, and process 32 bytes per iteration
 	   using the fast NUL check.  If we encounter non-ASCII characters,
 	   fallback to a second loop using the full NUL check.
+<<<<<<< HEAD
 
+=======
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
 	   If the page cross check fails, we read 16 bytes from an aligned
 	   address, remove any characters before the string, and continue
 	   in the main loop using aligned loads.  Since strings crossing a
 	   page in the first 16 bytes are rare (probability of
 	   16/MIN_PAGE_SIZE ~= 0.4%), this case does not need to be optimized.
+<<<<<<< HEAD
 
+=======
+>>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
 	   AArch64 systems have a minimum page size of 4k.  We don't bother
 	   checking for larger page sizes - the cost of setting up the correct
 	   page size is just not worth the extra gain from a small reduction in
