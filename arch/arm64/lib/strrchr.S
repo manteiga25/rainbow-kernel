@@ -1,10 +1,8 @@
-/* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Based on arch/arm/lib/strrchr.S
  *
  * Copyright (C) 1995-2000 Russell King
  * Copyright (C) 2013 ARM Ltd.
-<<<<<<< HEAD
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -17,8 +15,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-=======
->>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
  */
 
 #include <linux/linkage.h>
@@ -33,11 +29,7 @@
  * Returns:
  *	x0 - address of last occurrence of 'c' or 0
  */
-<<<<<<< HEAD
 SYM_FUNC_START_WEAK(strrchr)
-=======
-SYM_FUNC_START_WEAK_PI(strrchr)
->>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
 	mov	x3, #0
 	and	w1, w1, #0xff
 1:	ldrb	w2, [x0], #1
@@ -48,9 +40,5 @@ SYM_FUNC_START_WEAK_PI(strrchr)
 	b	1b
 2:	mov	x0, x3
 	ret
-<<<<<<< HEAD
 SYM_FUNC_END(strrchr)
 EXPORT_SYMBOL_NOKASAN(strrchr)
-=======
-SYM_FUNC_END_PI(strrchr)
->>>>>>> aa161aff11db5f379ddc75130573f4dcb654b19b
