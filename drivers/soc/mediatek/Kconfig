@@ -99,4 +99,12 @@ source "drivers/soc/mediatek/devmpu/Kconfig"
 
 endmenu # Security
 
+config STATE_NOTIFIER
+	bool "State Notifier"
+	default n
+	help
+	  State notifier driver deeply hooks into our panel and sends notification
+	  to drivers whenever screen turns on/off - even for doze mode.
+	  Say y to enable this driver.
+
 endmenu

@@ -22,6 +22,8 @@ static unsigned short devfreq_boost_dur =
 module_param(devfreq_boost_freq, long, 0644);
 module_param(devfreq_boost_dur, short, 0644);
 
+unsigned long last_devfreq_boost_time;
+
 enum {
 	SCREEN_OFF,
 	INPUT_BOOST,
@@ -62,6 +64,12 @@ static struct df_boost_drv df_boost_drv_g __read_mostly = {
 	BOOST_DEV_INIT(df_boost_drv_g, DEVFREQ_MTK_FREQ,
 		       CONFIG_DEVFREQ_MTK_FREQ_BOOST_FREQ)
 };
+static int disable_boost = 0;
+
+void disable_devfreq_video_boost(int disable)
+{
+	disable_boost = disable;
+}
 
 static void __devfreq_boost_kick(struct boost_dev *b)
 {
@@ -82,6 +90,8 @@ void devfreq_boost_kick(enum df_device device)
 	struct df_boost_drv *d = &df_boost_drv_g;
 
 	__devfreq_boost_kick(&d->devices[device]);
+	
+	last_devfreq_boost_time = jiffies;
 }
 
 static void __devfreq_boost_kick_max(struct boost_dev *b,
@@ -115,6 +125,9 @@ static void __devfreq_boost_kick_max(struct boost_dev *b,
 void devfreq_boost_kick_max(enum df_device device, unsigned int duration_ms)
 {
 	struct df_boost_drv *d = &df_boost_drv_g;
+	
+	if (disable_boost)
+		return;
 
 	__devfreq_boost_kick_max(&d->devices[device], duration_ms);
 }
@@ -150,16 +163,15 @@ static void devfreq_max_unboost(struct work_struct *work)
 static void devfreq_update_boosts(struct boost_dev *b, unsigned long state)
 {
 	struct devfreq *df = b->df;
-	int first_freq_idx = df->profile->max_state - 1;
 
 	mutex_lock(&df->lock);
 	if (state & BIT(SCREEN_OFF)) {
-		df->min_freq = df->profile->freq_table[first_freq_idx];
+		df->min_freq = df->profile->freq_table[0];
 		df->max_boost = false;
 	} else {
 		df->min_freq = state & BIT(INPUT_BOOST) ?
 			       min(devfreq_boost_freq, df->max_freq) :
-			       df->profile->freq_table[first_freq_idx];
+			       df->profile->freq_table[0];
 		df->max_boost = state & BIT(MAX_BOOST);
 	}
 	update_devfreq(df);

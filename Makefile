@@ -650,8 +650,8 @@ endif
 ifdef CONFIG_LTO_CLANG
 # use llvm-ar for building symbol tables from IR files, and llvm-nm instead
 # of objdump for processing symbol versions and exports
-LLVM_AR		:= /home/alexandre/Transferências/proton-clang-master/bin/llvm-ar
-LLVM_NM		:= /home/alexandre/Transferências/proton-clang-master/bin/llvm-nm
+LLVM_AR		:= /home/alexandre/linux-x86-master/clang-r445002/bin/llvm-ar
+LLVM_NM		:= /home/alexandre/linux-x86-master/clang-r445002/bin/llvm-nm
 export LLVM_AR LLVM_NM
 endif
 
@@ -722,7 +722,7 @@ endif
 
 ifeq ($(cc-name),clang)
 # Add Some optimization flags for clang
-KBUILD_CFLAGS	+= -O3 -mcpu=cortex-a53 \
+KBUILD_CFLAGS	+= -mcpu=cortex-a53 \
 -fomit-frame-pointer -pipe \
 -ffunction-sections \
 -ffp-model=fast -foptimize-sibling-calls $(CFLAGS)
@@ -744,7 +744,6 @@ KBUILD_CFLAGS	+= -mllvm -polly \
                    -mllvm -polly-scheduling=dynamic \
                    -mllvm -polly-scheduling-chunksize=1 \
                    -mllvm -polly-vectorizer=polly \
-                   -mllvm -polly-opt-fusion=max \
                    -mllvm -polly-opt-maximize-bands=yes \
                    -mllvm -polly-ast-use-context \
                    -mllvm -polly-detect-keep-going \
@@ -909,7 +908,7 @@ endif
 
 ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
 KBUILD_CFLAGS_KERNEL += -ffunction-sections -fdata-sections
-LDFLAGS_vmlinux += --gc-sections
+LDFLAGS_vmlinux += --gc-sections -z nostart-stop-gc
 endif
 
 ifdef CONFIG_LTO_CLANG
