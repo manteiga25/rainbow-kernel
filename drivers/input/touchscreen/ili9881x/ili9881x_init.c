@@ -887,7 +887,7 @@ static int ilitek_plat_probe(void)
 	if (sysfs_create_link(NULL, &ilits->dev->kobj, "touchscreen") < 0)
 		input_info(true, ilits->dev, "%s Failed to create link!\n", __func__);
 #else
-	ilitek_plat_sleep_init();		
+	ilitek_plat_sleep_init();
 #endif
 	ilits->pm_suspend = false;
 	init_completion(&ilits->pm_completion);

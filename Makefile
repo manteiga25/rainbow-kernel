@@ -650,8 +650,8 @@ endif
 ifdef CONFIG_LTO_CLANG
 # use llvm-ar for building symbol tables from IR files, and llvm-nm instead
 # of objdump for processing symbol versions and exports
-LLVM_AR		:= /home/alexandre/linux-x86-master/clang-r445002/bin/llvm-ar
-LLVM_NM		:= /home/alexandre/linux-x86-master/clang-r445002/bin/llvm-nm
+LLVM_AR		:= /home/alexandre/proton-clang/bin/llvm-ar
+LLVM_NM		:= /home/alexandre/proton-clang/bin/llvm-nm
 export LLVM_AR LLVM_NM
 endif
 
@@ -711,7 +711,7 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3_OFAST_SUB_OPTIONS
-KBUILD_CFLAGS   += -O3 -fno-signed-zeros -fassociative-math -fno-trapping-math -freciprocal-math -fno-math-errno $(call cc-disable-warning,maybe-uninitialized,) $(CFLAGS)
+KBUILD_CFLAGS   += -O3 -fno-signed-zeros -fassociative-math -fno-trapping-math -freciprocal-math -fno-math-errno $(call cc-disable-warning,maybe-uninitialized,)
 KBUILD_CPPFLAGS += -O3
 KBUILD_AFLAGS   += -O3 -mcpu=cortex-a53
 LDFLAGS         += -O3
@@ -725,7 +725,7 @@ ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -mcpu=cortex-a53 \
 -fomit-frame-pointer -pipe \
 -ffunction-sections \
--ffp-model=fast -foptimize-sibling-calls $(CFLAGS)
+-ffp-model=fast -foptimize-sibling-calls
 
 # Enable Clang Polly optimizations
 KBUILD_CFLAGS	+= -mllvm -polly \
@@ -754,7 +754,7 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-opt-simplify-deps=no \
 		   -mllvm -polly-rtc-max-arrays-per-group=40 \
 		   -mllvm -polly-parallel \
-			 -mllvm -polly-ast-detect-parallel $(CFLAGS)
+			 -mllvm -polly-ast-detect-parallel
                           #-mllvm -polly-no-early-exit
 endif                          
 
@@ -766,7 +766,7 @@ KBUILD_CFLAGS	+= -fexperimental-new-pass-manager
 KBUILD_CFLAGS	+= -fasynchronous-unwind-tables -fexceptions -fno-semantic-interposition -D_FORTIFY_SOURCE=2 \
 -fno-strict-aliasing \
 -pthread -Wall -Wformat-security -fwrapv --param=ssp-buffer-size=32 \
--D_REENTRANT $(CFLAGS)
+-D_REENTRANT
 
 #-g
 
@@ -821,6 +821,10 @@ KBUILD_CFLAGS += $(call cc-disable-warning, format-invalid-specifier)
 KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
 # Quiet clang warning: comparison of unsigned expression < 0 is always false
 KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
+# CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
+# source of a reference will be _MergedGlobals and not on of the whitelisted names.
+# See modpost pattern 2
+KBUILD_CFLAGS += $(call cc-option, -mno-global-merge,)
 KBUILD_CFLAGS += $(call cc-option, -fcatch-undefined-behavior)
 else
 
@@ -908,7 +912,7 @@ endif
 
 ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
 KBUILD_CFLAGS_KERNEL += -ffunction-sections -fdata-sections
-LDFLAGS_vmlinux += --gc-sections -z nostart-stop-gc
+LDFLAGS_vmlinux += --gc-sections
 endif
 
 ifdef CONFIG_LTO_CLANG

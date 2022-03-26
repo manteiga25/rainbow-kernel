@@ -15,7 +15,7 @@
 #include <linux/moduleparam.h>
 
 static unsigned long devfreq_boost_freq =
-	CONFIG_DEVFREQ_MTK_FREQ_BOOST_FREQ;
+	CONFIG_DEVFREQ_MTK_CPUBW_BOOST_FREQ;
 static unsigned short devfreq_boost_dur =
 	CONFIG_DEVFREQ_INPUT_BOOST_DURATION_MS;
 
@@ -61,8 +61,8 @@ static void devfreq_max_unboost(struct work_struct *work);
 }
 
 static struct df_boost_drv df_boost_drv_g __read_mostly = {
-	BOOST_DEV_INIT(df_boost_drv_g, DEVFREQ_MTK_FREQ,
-		       CONFIG_DEVFREQ_MTK_FREQ_BOOST_FREQ)
+	BOOST_DEV_INIT(df_boost_drv_g, DEVFREQ_MTK_CPUBW,
+		       CONFIG_DEVFREQ_MTK_CPUBW_BOOST_FREQ)
 };
 static int disable_boost = 0;
 

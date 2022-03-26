@@ -23,8 +23,10 @@
 #endif
 
 #ifndef cond_syscall
-#define cond_syscall(x) \
-        long __attribute__((weak, alias("sys_ni_syscall"))) x(void);
+#define cond_syscall(x)	asm(				\
+	".weak " __stringify(x) "\n\t"			\
+	".set  " __stringify(x) ","			\
+		 __stringify(sys_ni_syscall))
 #endif
 
 #ifndef SYSCALL_ALIAS
@@ -124,7 +126,7 @@
 #ifndef ENDPROC
 /* deprecated, use SYM_FUNC_END */
 #define ENDPROC(name) \
-	SYM_FUNC_END(name)
+    SYM_FUNC_END(name)
 #endif
 
 /* === generic annotations === */

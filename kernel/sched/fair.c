@@ -37,8 +37,8 @@
  *
  * (default: 5ms * (1 + ilog(ncpus)), units: nanoseconds)
  */
-unsigned int sysctl_sched_latency			= 5000000ULL;           // 6000000ULL
-unsigned int normalized_sysctl_sched_latency		= 5000000ULL;           // 6000000ULL
+unsigned int sysctl_sched_latency			= 6000000ULL;           // 6000000ULL
+unsigned int normalized_sysctl_sched_latency		= 6000000ULL;           // 6000000ULL
 
 /*
  * Enable/disable honoring sync flag in energy-aware wakeups.
@@ -68,13 +68,13 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
  *
  * (default: 0.50 msec * (1 + ilog(ncpus)), units: nanoseconds)
  */
-unsigned int sysctl_sched_min_granularity		= 500000ULL;            // 750000ULL
-unsigned int normalized_sysctl_sched_min_granularity	= 500000ULL;            // 750000ULL
+unsigned int sysctl_sched_min_granularity		= 750000ULL;            // 750000ULL
+unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;            // 750000ULL
 
 /*
  * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
  */
-static unsigned int sched_nr_latency = 6;   //8
+static unsigned int sched_nr_latency = 8;   //8
 
 /*
  * After fork, child runs first. If set to 0 (default) then
@@ -117,7 +117,7 @@ int __weak arch_asym_cpu_priority(int cpu)
  *
  * (default: 4 msec, units: microseconds)
  */
-unsigned int sysctl_sched_cfs_bandwidth_slice		= 4000UL;   // 5000UL
+unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;   // 5000UL
 #endif
 
 /*

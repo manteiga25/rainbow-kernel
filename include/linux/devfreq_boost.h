@@ -8,7 +8,7 @@
 #include <linux/devfreq.h>
 
 enum df_device {
-	DEVFREQ_MTK_FREQ,
+	DEVFREQ_MTK_CPUBW,
 	DEVFREQ_MAX
 };
 

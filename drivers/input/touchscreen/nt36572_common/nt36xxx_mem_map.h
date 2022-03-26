@@ -15,7 +15,7 @@
  * more details.
  *
  */
- 
+
 struct nvt_ts_mem_map {
 	uint32_t EVENT_BUF_ADDR;
 	uint32_t RAW_PIPE0_ADDR;
